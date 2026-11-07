@@ -1,8 +1,8 @@
-\# Convorza AI
+# Convorza AI
 
 
 
-\*\*An AI-powered conversational workspace for businesses.\*\*
+**An AI-powered conversational workspace for businesses.**
 
 
 
@@ -10,43 +10,43 @@ Convorza AI helps businesses manage customer conversations through an AI assista
 
 
 
-\## Features
+## Features
 
 
 
-\- \*\*AI Customer Support:\*\* Handles customer conversations using Google's Gemini AI.
+-**AI Customer Support:** Handles customer conversations using Google's Gemini AI.
 
-\- \*\*Business Workspaces:\*\* Separate workspaces for different businesses.
+- **Business Workspaces:** Separate workspaces for different businesses.
 
-\- \*\*Business-Specific Assistants:\*\* Configure assistant names, tones, FAQs and supported languages.
+- **Business-Specific Assistants:** Configure assistant names, tones, FAQs and supported languages.
 
-\- \*\*Customer Record Lookup:\*\* Retrieve order or reservation information.
+- **Customer Record Lookup:** Retrieve order or reservation information.
 
-\- \*\*Request Management:\*\* Create and update customer requests.
+- **Request Management:** Create and update customer requests.
 
-\- \*\*Owner Authentication:\*\* Signup, login and logout functionality.
+- **Owner Authentication:** Signup, login and logout functionality.
 
-\- \*\*Business Dashboard:\*\* View business activity and customer requests.
-
-
-
-\## Technology Stack
+- **Business Dashboard:** View business activity and customer requests.
 
 
 
-\- \*\*Frontend:\*\* HTML, CSS, JavaScript
-
-\- \*\*Backend:\*\* Python, FastAPI
-
-\- \*\*AI:\*\* Google Gemini API
-
-\- \*\*Database:\*\* SQLite
-
-\- \*\*Data Storage:\*\* CSV and JSON files
+## Technology Stack
 
 
 
-\## Project Structure
+- **Frontend:** HTML, CSS, JavaScript
+
+- **Backend:** Python, FastAPI
+
+- **AI:** Google Gemini API
+
+- **Database:** SQLite
+
+- **Data Storage:** CSV and JSON files
+
+
+
+## Project Structure
 
 
 
@@ -90,11 +90,11 @@ convorza/
 
 
 
-\## Setup Instructions
+## Setup Instructions
 
 
 
-\### 1. Clone the repository
+### 1. Clone the repository
 
 
 
@@ -108,7 +108,7 @@ cd convorza
 
 
 
-\### 2. Create a virtual environment
+### 2. Create a virtual environment
 
 
 
@@ -132,7 +132,7 @@ venv\\Scripts\\activate
 
 
 
-\### 3. Install dependencies
+### 3. Install dependencies
 
 
 
@@ -144,7 +144,7 @@ pip install -r requirements.txt
 
 
 
-\### 4. Configure your Gemini API key
+### 4. Configure your Gemini API key
 
 
 
@@ -164,7 +164,7 @@ Replace the placeholder with your own Gemini API key.
 
 
 
-\### 5. Run the application
+### 5. Run the application
 
 
 
@@ -194,7 +194,7 @@ http://127.0.0.1:8001/docs
 
 
 
-\## Demo Data
+## Demo Data
 
 
 
@@ -202,7 +202,7 @@ The repository includes sample business configurations and fictional customer re
 
 
 
-\## Security
+## Security
 
 
 
