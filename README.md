@@ -210,9 +210,9 @@ Never upload your `.env` file, API keys, passwords or private database files to 
 
 
 
-\## Project
+## Project
 
 
 
-\*\*Convorza AI\*\* — Building smarter customer conversations for businesses.
+**Convorza AI** — Building smarter customer conversations for businesses.
 
