@@ -1,0 +1,12 @@
+{
+  "business_name": "Kora Clothing",
+  "assistant_name": "Riya",
+  "industry": "clothing",
+  "tone": "friendly, casual, short replies",
+  "languages": ["English", "Hindi", "Hinglish"],
+  "enabled_tools": ["lookup_record", "create_request", "check_policy", "escalate_to_human"],
+  "record_type": "order",
+  "request_types": ["delivery_complaint", "return_request", "exchange_request"],
+  "quick_replies": ["Track order", "Return or exchange", "Talk to human"],
+  "escalation_rules": ["customer is angry", "customer asks for a human", "refund above 2000 rupees"]
+}

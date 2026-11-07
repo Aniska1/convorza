@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convorza AI | Welcome</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,Arial,sans-serif;background:#f5f7fa;color:#172033;min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.left{padding:55px 9%;display:flex;flex-direction:column;justify-content:space-between;background:white}
+.logo{font-size:25px;font-weight:800;letter-spacing:-1px;color:#142b4a}
+.logo span{color:#268b9a}
+.tagline{max-width:470px}
+.tagline h1{font-size:46px;line-height:1.15;letter-spacing:-1.8px;margin-bottom:20px}
+.tagline p{font-size:16px;line-height:1.8;color:#687589}
+.features{display:grid;gap:18px;margin-top:35px}
+.feature{display:flex;gap:13px;align-items:center;color:#526075;font-size:14px}
+.check{background:#e5f4f4;color:#16818d;border-radius:10px;padding:10px}
+.footer{font-size:12px;color:#98a2b3}
+.right{display:flex;align-items:center;justify-content:center;padding:35px}
+.card{background:white;width:100%;max-width:440px;padding:38px;border:1px solid #e8edf2;border-radius:18px;box-shadow:0 15px 45px #1720330b}
+.tabs{display:flex;background:#f2f5f8;padding:5px;border-radius:10px;margin:25px 0}
+.tabs button{flex:1;border:0;padding:11px;background:transparent;border-radius:7px;cursor:pointer;color:#667085;font-weight:600}
+.tabs button.active{background:white;color:#172033;box-shadow:0 2px 7px #0000000c}
+h2{font-size:25px;margin-bottom:8px}
+.sub{font-size:14px;color:#7b8798;margin-bottom:25px}
+label{display:block;font-size:13px;font-weight:600;margin:16px 0 8px}
+input{width:100%;padding:13px;border:1px solid #dce3ea;border-radius:8px;font-size:14px;outline:none}
+input:focus{border-color:#268b9a}
+.primary{width:100%;padding:14px;background:#176b79;color:white;border:0;border-radius:8px;font-weight:700;font-size:14px;margin-top:22px;cursor:pointer}
+.primary:hover{background:#125966}
+.note{font-size:12px;color:#8993a2;text-align:center;margin-top:17px;line-height:1.6}
+.demo{margin-top:25px;border-top:1px solid #edf0f3;padding-top:20px}
+.demo p{font-size:12px;color:#7b8798;margin-bottom:12px}
+.demo button{width:100%;padding:11px;margin:5px 0;border:1px solid #dce5eb;border-radius:8px;background:white;text-align:left;cursor:pointer;color:#26384c;font-weight:600}
+.demo button:hover{border-color:#268b9a;background:#f7fbfb}
+.message{font-size:13px;color:#16818d;margin-top:12px;min-height:18px}
+.hidden{display:none}
+@media(max-width:800px){body{grid-template-columns:1fr}.left{display:none}.right{min-height:100vh;padding:20px}.card{padding:28px}}
+</style>
+</head>
+<body>
+<section class="left">
+  <div class="logo">convorza<span> AI.</span></div>
+  <div class="tagline">
+    <h1>Customer support,<br>made intelligent.</h1>
+    <p>One platform. Multiple businesses. Customized AI support agents.</p>
+    <div class="features">
+      <div class="feature"><span class="check">✓</span> AI-powered customer conversations</div>
+      <div class="feature"><span class="check">✓</span> Multilingual support for customers</div>
+      <div class="feature"><span class="check">✓</span> Smarter support request management</div>
+    </div>
+  </div>
+  <div class="footer">© 2026 Convorza AI. All rights reserved.</div>
+</section>
+
+<section class="right">
+<div class="card">
+  <h2 id="heading">Welcome back</h2>
+  <p class="sub" id="subheading">Log in to your business workspace.</p>
+
+  <div class="tabs">
+    <button class="active" id="loginTab" onclick="showTab('login')">Log in</button>
+    <button id="signupTab" onclick="showTab('signup')">Sign up</button>
+  </div>
+
+  <form id="loginForm">
+    <label>Email address</label>
+    <input id="email" type="email" placeholder="you@business.com" required>
+    <label>Password</label>
+    <input id="password" type="password" placeholder="Enter your password" required>
+    <button class="primary" type="submit">Log in to workspace →</button>
+  </form>
+
+  <form id="signupForm" class="hidden">
+    <label>Your name</label>
+    <input id="ownerName" placeholder="Your full name" required>
+    <label>Business name</label>
+    <input id="businessName" placeholder="e.g. Your Store" required>
+    <label>Email address</label>
+    <input type="email" placeholder="you@business.com" required>
+    <label>Password</label>
+    <input type="password" placeholder="Create a password" required>
+    <button class="primary" type="button" onclick="signupMessage()">Create account →</button>
+  </form>
+
+  <div class="message" id="message"></div>
+
+  <div class="demo" id="demo">
+    <p>QUICK DEMO ACCESS · CHOOSE A WORKSPACE</p>
+    <button onclick="enterDemo('kora_clothing')">Kora Clothing →</button>
+    <button onclick="enterDemo('spice_route')">Spice Route →</button>
+  </div>
+  <p class="note">Demo access is for project demonstration. Full account authentication and registration will be added in a future version.</p>
+</div>
+</section>
+
+<script>
+function showTab(tab){
+  const login = tab === 'login';
+  document.getElementById('loginForm').classList.toggle('hidden',!login);
+  document.getElementById('signupForm').classList.toggle('hidden',login);
+  document.getElementById('demo').classList.toggle('hidden',!login);
+  document.getElementById('loginTab').classList.toggle('active',login);
+  document.getElementById('signupTab').classList.toggle('active',!login);
+  document.getElementById('heading').textContent=login?'Welcome back':'Create your workspace';
+  document.getElementById('subheading').textContent=login?'Log in to your business workspace.':'Get started with Convorza AI.';
+  document.getElementById('message').textContent='';
+}
+function enterDemo(business){
+  sessionStorage.setItem('convorza_demo_business',business);
+  window.location.href='/';
+}
+function signupMessage(){
+  document.getElementById('message').textContent=
+  'Account registration is coming soon. Use demo access to explore the platform.';
+}
+document.getElementById('loginForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  document.getElementById('message').textContent=
+  'For this project demo, please select a demo workspace below.';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{
+    "business_name": "MISU",
+    "industry": "Restaurant",
+    "assistant_name": "Riya",
+    "tone": "Friendly, helpful and professional",
+    "languages": [
+        "English",
+        "Hindi",
+        "Hinglish"
+    ],
+    "quick_replies": [
+        "I need help",
+        "Track my order",
+        "I have a complaint"
+    ],
+    "enabled_tools": [
+        "lookup_record",
+        "create_request",
+        "escalate_to_human"
+    ],
+    "request_types": [
+        "general_question",
+        "complaint",
+        "order_issue",
+        "other"
+    ],
+    "escalation_rules": [
+        "Customer requests a human agent",
+        "Issue cannot be resolved",
+        "Customer is very upset"
+    ]
+}

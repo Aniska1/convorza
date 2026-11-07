@@ -1,0 +1,1130 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convorza AI | Business Workspace</title>
+
+<style>
+:root{--blue:#2864e8;--navy:#17243b;--muted:#7b8799;--bg:#f5f7fb;--line:#e9edf3;--white:#fff;--green:#16865b;--red:#d94c55}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--navy)}
+button,select,input{font:inherit}button{cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{width:245px;background:white;border-right:1px solid var(--line);padding:25px 17px;display:flex;flex-direction:column;flex-shrink:0}
+.brand{font-size:23px;font-weight:800;letter-spacing:-1px;padding:4px 10px 27px}.brand span{color:var(--blue)}
+.workspace-label{font-size:10px;font-weight:700;color:#a0a9b7;letter-spacing:1.3px;padding:0 11px 10px}
+.business-select{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:white;color:var(--navy);font-weight:600;margin-bottom:28px}
+.nav-label{font-size:10px;font-weight:700;color:#a0a9b7;letter-spacing:1.2px;padding:0 11px 9px;margin-top:15px}
+.nav button{width:100%;border:0;background:transparent;text-align:left;padding:11px;border-radius:8px;color:#68758a;font-size:13px;font-weight:550;margin:2px 0}
+.nav button:hover,.nav button.active{background:#edf3ff;color:var(--blue)}
+.nav button span{display:inline-block;width:25px;font-size:16px}
+.sidebar-bottom{margin-top:auto;border-top:1px solid var(--line);padding:18px 10px 0;font-size:12px;color:var(--muted)}
+.status-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#20b77a;margin-right:7px}
+.main{flex:1;min-width:0}
+.topbar{height:72px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px}
+.topbar small{color:var(--muted)}
+.profile{width:35px;height:35px;border-radius:50%;background:#e8efff;color:var(--blue);display:grid;place-items:center;font-weight:700}
+.content{max-width:1450px;margin:auto;padding:34px}
+.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;margin-bottom:26px}
+h1{font-size:25px;letter-spacing:-.7px;margin:0 0 7px}
+.subtitle{font-size:13px;color:var(--muted)}
+.primary{background:var(--blue);color:white;border:0;border-radius:8px;padding:11px 16px;font-size:12px;font-weight:650}
+.secondary{background:white;color:var(--navy);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:22px}
+.stat,.panel{background:white;border:1px solid var(--line);border-radius:12px}
+.stat{padding:19px}
+.stat-top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px}
+.stat-icon{width:33px;height:33px;border-radius:9px;background:#edf3ff;display:grid;place-items:center;color:var(--blue);font-size:16px}
+.stat strong{display:block;font-size:27px;margin:15px 0 5px;letter-spacing:-1px}
+.stat small{font-size:11px;color:var(--muted)}
+.columns{display:grid;grid-template-columns:1.35fr 1fr;gap:18px}
+.panel{padding:21px;margin-bottom:18px;min-width:0}
+.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.panel-head h3{font-size:14px;margin:0}
+.panel-head small{color:var(--muted);font-size:11px}
+.activity{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px solid #f0f2f6;font-size:12px}
+.activity:last-child{border:0}
+.activity-icon{width:31px;height:31px;display:grid;place-items:center;border-radius:8px;background:#f0f4fc;flex-shrink:0}
+.activity strong{display:block;margin-bottom:4px}
+.activity small{color:var(--muted)}
+.tag{font-size:10px;padding:5px 8px;border-radius:20px;background:#edf3ff;color:var(--blue);white-space:nowrap}
+.tag.red{background:#fff0f0;color:var(--red)}.tag.green{background:#e9f8f1;color:var(--green)}
+.empty{padding:24px;text-align:center;color:var(--muted);font-size:12px}
+.business-card{display:flex;gap:13px;align-items:center;padding:13px 0;border-bottom:1px solid #f0f2f6}
+.business-card:last-child{border:0}
+.business-avatar{width:42px;height:42px;border-radius:11px;background:#edf3ff;display:grid;place-items:center;font-weight:800;color:var(--blue);flex-shrink:0}
+.business-card strong{font-size:13px}
+.business-card small{display:block;color:var(--muted);margin-top:5px;font-size:11px}
+.section{display:none}.section.active{display:block}
+.chat-layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:18px}
+.chat-panel{background:white;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;height:610px}
+.chat-header{padding:17px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.chat-header strong{font-size:13px}.chat-header small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+.chat-messages{flex:1;overflow-y:auto;padding:20px;background:#fafbfd}
+.message{max-width:80%;padding:12px 14px;border-radius:12px;margin-bottom:12px;font-size:12px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.message.bot{background:white;border:1px solid var(--line);border-top-left-radius:3px}
+.message.user{background:var(--blue);color:white;margin-left:auto;border-top-right-radius:3px}
+.chat-input-area{padding:13px;border-top:1px solid var(--line)}
+.chat-input-row{display:flex;gap:8px}
+.chat-input-row input{flex:1;min-width:0;border:1px solid var(--line);border-radius:8px;padding:12px;font-size:12px;outline:none}
+.chat-input-row input:focus{border-color:var(--blue)}
+.quick-replies{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px}
+.quick-replies button{border:1px solid #dce5f6;color:var(--blue);background:white;border-radius:20px;padding:7px 10px;font-size:10px}
+.demo-note{font-size:11px;color:var(--muted);line-height:1.6}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;color:var(--muted);font-size:10px;font-weight:650;padding:11px 9px;border-bottom:1px solid var(--line)}
+td{padding:13px 9px;border-bottom:1px solid #f0f2f6;vertical-align:top}
+td.details{min-width:220px;max-width:400px;line-height:1.5;overflow-wrap:anywhere}
+.agent-box{display:flex;gap:15px;align-items:center}
+.agent-avatar{width:55px;height:55px;background:#edf3ff;color:var(--blue);border-radius:14px;display:grid;place-items:center;font-size:23px}
+.agent-box strong{font-size:15px}.agent-box small{display:block;color:var(--muted);margin-top:5px;font-size:11px}
+.feature-list{padding-left:18px;color:#68758a;font-size:12px;line-height:2}
+.notice{padding:12px 14px;background:#f1f6ff;border-radius:8px;color:#47618c;font-size:11px;line-height:1.6;margin-top:14px}
+.request-filters{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:20px}
+.filter-btn{padding:9px 15px;border:1px solid var(--line);background:white;color:#68758a;border-radius:8px;font-size:11px;font-weight:600;transition:.2s}
+.filter-btn:hover{border-color:var(--blue);color:var(--blue)}
+.filter-btn.active{background:#edf3ff;border-color:#d6e3ff;color:var(--blue)}
+.ticket-status{padding:7px;border:1px solid var(--line);border-radius:7px;font-size:11px;background:white;color:var(--navy)}
+.analytics-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:22px 0}
+.analytics-card{min-width:0}.analytics-item{margin:16px 0}
+.analytics-label{display:flex;justify-content:space-between;gap:12px;margin-bottom:8px;font-size:13px}
+.analytics-label span:last-child{font-weight:700}
+.analytics-track{height:9px;background:#edf0f5;border-radius:20px;overflow:hidden}
+.analytics-fill{height:100%;border-radius:20px;transition:width .3s ease}
+.analytics-fill.open{background:#e8a34b}.analytics-fill.progress{background:#6598e8}
+.analytics-fill.resolved{background:#48ad87}.analytics-fill.high{background:#e47777}
+.analytics-fill.medium{background:#e8b65d}.analytics-fill.low{background:#48ad87}
+.resolution-number{font-size:38px;font-weight:750;margin:16px 0 5px}
+.resolution-track{height:12px;background:#edf0f5;border-radius:20px;overflow:hidden;margin:14px 0}
+.resolution-fill{height:100%;background:#48ad87;border-radius:20px}
+.trend-panel{margin-bottom:22px}
+.trend-chart{display:flex;align-items:end;justify-content:space-around;gap:14px;height:180px;padding:20px 8px 0}
+.trend-column{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:end;gap:8px}
+.trend-bar{width:min(38px,75%);min-height:3px;background:#7298e8;border-radius:7px 7px 0 0}
+.trend-value,.trend-day{font-size:11px;color:#777}
+.auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:25px;background:#f5f7fb}
+.auth-card{width:100%;max-width:440px;background:white;padding:35px;border:1px solid #e9edf3;border-radius:16px;box-shadow:0 12px 40px rgba(23,36,59,.05)}
+.auth-card .brand{padding:0 0 10px}.auth-card h1{font-size:25px;margin-top:15px}
+.auth-field{width:100%;padding:12px;border:1px solid #e9edf3;border-radius:8px;margin:7px 0 15px;outline:none;background:white}
+.auth-field:focus{border-color:var(--blue)}
+.auth-label{font-size:11px;color:var(--muted)}
+.auth-error{color:var(--red);font-size:12px;line-height:1.5;min-height:18px}
+.auth-switch{border:0;background:none;color:var(--blue);font-weight:700}
+.auth-divider{border-top:1px solid var(--line);margin-top:22px;padding-top:18px;text-align:center}
+.hidden{display:none!important}
+@media(max-width:950px){.sidebar{width:205px}.grid{grid-template-columns:repeat(2,1fr)}.columns,.chat-layout{grid-template-columns:1fr}}
+@media(max-width:900px){.analytics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.sidebar{width:65px;padding:15px 7px}.brand{font-size:0;padding:10px 8px 25px}.brand span{font-size:23px}.workspace-label,.business-select,.nav-label,.nav button:not(.active){display:none}.nav button{font-size:0;text-align:center;padding:12px 5px}.nav button span{font-size:18px;width:auto}.sidebar-bottom{font-size:0;padding:12px 5px}.topbar{padding:0 16px}.content{padding:22px 14px}.grid{gap:9px}.stat{padding:13px}.stat strong{font-size:22px}.page-head{flex-direction:column}}
+@media(max-width:600px){.analytics-grid{grid-template-columns:1fr}}
+
+/* CONVORZA LANDING PAGE */
+.landing{min-height:100vh;color:#f5fbff;background:#071725;overflow:hidden;position:relative;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.landing:before,.landing:after{content:"";position:absolute;pointer-events:none;border-radius:50%;filter:blur(2px);opacity:.5}
+.landing:before{width:560px;height:560px;right:2%;top:4%;background:radial-gradient(circle,rgba(25,190,183,.25),rgba(27,112,170,.1) 42%,transparent 70%);animation:ambient 12s ease-in-out infinite alternate}
+.landing:after{width:420px;height:420px;left:-12%;bottom:-12%;background:radial-gradient(circle,rgba(31,115,201,.22),transparent 68%);animation:ambient 15s ease-in-out infinite alternate-reverse}
+@keyframes ambient{from{transform:translate3d(-15px,-10px,0) scale(.92)}to{transform:translate3d(25px,25px,0) scale(1.12)}}
+.landing-nav{height:82px;max-width:1320px;margin:auto;padding:0 6%;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2}
+.landing-logo{font-size:25px;font-weight:800;letter-spacing:-1.2px;color:#fff}.landing-logo span{color:#52d8ce}
+.landing-links{display:flex;align-items:center;gap:30px}.landing-links a{color:#b8cbd5;text-decoration:none;font-size:13px;transition:.2s}.landing-links a:hover{color:#fff}
+.landing-login{border:1px solid rgba(164,222,229,.45);background:rgba(255,255,255,.06);color:white;padding:11px 23px;border-radius:30px;font-size:12px;transition:.25s}.landing-login:hover{background:#39bdb5;color:#061a25;border-color:#39bdb5;transform:translateY(-2px)}
+.landing-hero{max-width:1320px;min-height:590px;margin:auto;padding:65px 6% 85px;display:grid;grid-template-columns:1.02fr .98fr;align-items:center;gap:30px;position:relative;z-index:1}
+.hero-copy{max-width:600px;animation:rise .8s ease both}.eyebrow{display:inline-flex;align-items:center;gap:9px;color:#7ee3dc;font-size:10px;font-weight:750;letter-spacing:2px;text-transform:uppercase;margin-bottom:23px}.eyebrow:before{content:"";width:7px;height:7px;border-radius:50%;background:#55d9ce;box-shadow:0 0 14px #55d9ce}
+.hero-copy h1{font-size:clamp(44px,5.3vw,76px);line-height:1.04;letter-spacing:-3.5px;font-weight:650;margin:0 0 23px;color:#f4fbff}.hero-copy h1 em{font-style:normal;color:#69dcd3}.hero-copy p{font-size:15px;line-height:1.85;color:#a9bdc9;max-width:500px;margin:0 0 30px}
+.hero-actions{display:flex;gap:13px;align-items:center;flex-wrap:wrap}.hero-primary,.hero-secondary{padding:14px 22px;border-radius:30px;font-size:12px;font-weight:700;transition:.25s}.hero-primary{border:0;background:linear-gradient(110deg,#5fe0d4,#38b8c4);color:#06212b;box-shadow:0 8px 30px rgba(51,196,190,.2)}.hero-primary:hover{transform:translateY(-3px);box-shadow:0 12px 34px rgba(51,196,190,.32)}.hero-secondary{border:1px solid rgba(173,211,220,.28);background:rgba(255,255,255,.04);color:#eaf7fa}.hero-secondary:hover{background:rgba(255,255,255,.1)}
+.hero-visual{height:430px;position:relative;display:grid;place-items:center;animation:rise 1s .15s ease both}.orb-halo{position:absolute;width:min(390px,78vw);aspect-ratio:1;border-radius:50%;border:1px solid rgba(112,229,221,.28);box-shadow:0 0 65px rgba(39,188,189,.13),inset 0 0 55px rgba(42,174,193,.1);animation:orbit 18s linear infinite}.orb-halo:before,.orb-halo:after{content:"";position:absolute;border:1px solid rgba(104,217,226,.25);border-radius:50%;inset:22px;transform:rotateX(65deg) rotate(-25deg)}.orb-halo:after{inset:48px;transform:rotateY(65deg) rotate(25deg);border-color:rgba(91,215,198,.3)}
+@keyframes orbit{to{transform:rotate(360deg)}}
+.ai-core{width:205px;height:205px;border-radius:50%;position:relative;background:radial-gradient(circle at 35% 28%,#b6fff2 0,#4dd5d0 12%,#167f9c 38%,#0c3455 68%,#081c31 100%);box-shadow:0 0 35px rgba(67,222,212,.55),0 0 110px rgba(40,154,196,.28),inset -20px -20px 45px rgba(0,0,0,.35);animation:float 5s ease-in-out infinite}.ai-core:before{content:"";position:absolute;inset:-13px;border-radius:50%;border:2px solid transparent;border-top-color:#8ff5e5;border-right-color:rgba(111,222,236,.55);filter:drop-shadow(0 0 8px #53d8d0);transform:rotate(-25deg)}.ai-core:after{content:"✧";position:absolute;inset:0;display:grid;place-items:center;font-size:74px;color:#e3fffb;text-shadow:0 0 25px #8ffff0}
+@keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-15px) scale(1.035)}}
+.float-chip{position:absolute;padding:12px 16px;border:1px solid rgba(158,224,228,.22);border-radius:13px;background:rgba(8,32,49,.72);backdrop-filter:blur(12px);box-shadow:0 12px 30px rgba(0,0,0,.18);color:#dff7f5;font-size:11px;animation:float 5s ease-in-out infinite}.float-chip b{color:#6fe2d8;font-weight:700}.chip-one{top:54px;right:0}.chip-two{bottom:66px;left:0;animation-delay:-2s}.chip-three{right:3%;bottom:28px;animation-delay:-3s}
+.landing-proof{position:relative;z-index:1;max-width:1160px;margin:0 auto 55px;padding:24px 6%;border-top:1px solid rgba(183,221,229,.13);border-bottom:1px solid rgba(183,221,229,.13);display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.proof-item{display:flex;align-items:center;gap:13px}.proof-icon{width:39px;height:39px;border-radius:12px;display:grid;place-items:center;background:rgba(72,207,198,.1);color:#72e3d9;font-size:18px}.proof-item strong{display:block;font-size:12px;color:#e9f8fa;margin-bottom:4px}.proof-item small{font-size:10px;color:#8eaab7}
+.landing-footer{position:relative;z-index:1;text-align:center;padding:0 20px 28px;color:#6f8b99;font-size:10px}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:760px){.landing-nav{height:70px;padding:0 22px}.landing-links{gap:12px}.landing-links a{display:none}.landing-hero{grid-template-columns:1fr;padding:55px 25px 35px;gap:0;text-align:center}.hero-copy{margin:auto}.hero-copy h1{letter-spacing:-2px}.hero-copy p{margin-left:auto;margin-right:auto}.hero-actions{justify-content:center}.hero-visual{height:340px}.orb-halo{width:285px}.ai-core{width:155px;height:155px}.float-chip{font-size:9px;padding:9px 11px}.chip-one{right:2%}.chip-two{left:0}.landing-proof{grid-template-columns:1fr;padding:25px;max-width:420px}.landing-footer{padding-bottom:24px}}
+@media(prefers-reduced-motion:reduce){.landing *{animation:none!important;transition:none!important}}
+
+
+/* CONVORZA 1 + 3 VISUAL REFRESH — landing page only */
+.landing{--mint:#69e5d5;--aqua:#35c4d0;--ink:#071522;--muted-landing:#a8bbc8;background:radial-gradient(ellipse at 75% 25%,rgba(19,112,132,.22),transparent 34%),radial-gradient(ellipse at 5% 85%,rgba(42,83,160,.2),transparent 35%),#071522;color:#f4fbff;isolation:isolate}
+.landing:before{width:650px;height:650px;right:-8%;top:-8%;background:radial-gradient(circle,rgba(49,213,202,.22),rgba(40,113,166,.1) 42%,transparent 70%);filter:blur(8px)}
+.landing:after{width:520px;height:520px;left:-18%;bottom:4%;background:radial-gradient(circle,rgba(65,105,205,.2),transparent 68%);filter:blur(12px)}
+.landing-grain{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.15;background-image:linear-gradient(rgba(159,215,225,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(159,215,225,.08) 1px,transparent 1px);background-size:58px 58px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+.landing-nav{height:88px;max-width:1360px;padding:0 6.5%}
+.landing-logo{font-size:27px;letter-spacing:-1.6px;text-decoration:none}
+.landing-logo span,.footer-logo span{color:var(--mint)}
+.landing-links{gap:34px}
+.landing-links a{font-size:13px;color:#b7c8d1;letter-spacing:.1px}
+.landing-login{padding:12px 22px;border-radius:999px;border:1px solid rgba(116,222,219,.4);background:rgba(255,255,255,.055);font-weight:650}
+.landing-login span{margin-left:8px;color:var(--mint)}
+.landing-login:hover{background:var(--mint);color:#06202a;border-color:var(--mint)}
+.landing-login:hover span{color:#06202a}
+.landing-hero{max-width:1360px;min-height:650px;padding:70px 6.5% 80px;grid-template-columns:1.04fr .96fr;gap:12px}
+.hero-copy{max-width:640px;position:relative;z-index:2}
+.eyebrow{font-size:10px;letter-spacing:2.2px;color:#83e8df;margin-bottom:25px}
+.eyebrow:before{display:none}
+.eyebrow-dot{width:7px;height:7px;display:inline-block;border-radius:50%;background:#6ce4d7;box-shadow:0 0 15px #58dacc}
+.hero-copy h1{font-size:clamp(50px,6vw,88px);line-height:.99;letter-spacing:-5px;font-weight:720;margin:0 0 27px;color:#f5fbff}
+.hero-copy h1 em,.features-heading h2 em{font-style:normal;background:linear-gradient(100deg,#9af4e7 4%,#54d6d8 46%,#71a9f7 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-copy p{font-size:15px;line-height:1.9;color:#a9bdc9;max-width:510px;margin:0 0 32px}
+.hero-actions{gap:14px}
+.hero-primary,.hero-secondary{padding:15px 23px;border-radius:999px;font-size:12px;font-weight:750}
+.hero-primary{background:linear-gradient(110deg,#91f0df,#48cbd1);color:#06212a;box-shadow:0 10px 35px rgba(54,207,198,.23)}
+.hero-primary span{margin-left:10px;font-size:15px}
+.hero-primary:hover{transform:translateY(-3px);box-shadow:0 14px 38px rgba(54,207,198,.36)}
+.hero-secondary{border:1px solid rgba(177,214,225,.27);background:rgba(255,255,255,.035);color:#e8f6f8}
+.hero-secondary span{margin-left:10px;color:#7fe6dc}
+.hero-secondary:hover{background:rgba(255,255,255,.09);transform:translateY(-2px)}
+.hero-note{display:flex;align-items:center;gap:9px;margin-top:27px;color:#829eac;font-size:11px;letter-spacing:.2px}
+.note-check{display:grid;place-items:center;width:17px;height:17px;border-radius:50%;background:rgba(99,220,205,.14);color:#80eadb;font-size:11px}
+.hero-visual{height:510px;overflow:visible;isolation:isolate}
+.visual-glow{position:absolute;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(42,195,194,.18),rgba(48,112,178,.08) 45%,transparent 70%);filter:blur(14px)}
+.orb-halo{width:min(420px,75vw);border-color:rgba(112,229,221,.27);box-shadow:0 0 90px rgba(39,188,189,.16),inset 0 0 70px rgba(42,174,193,.12)}
+.orb-halo:before{inset:15px;transform:rotateX(68deg) rotate(-28deg)}
+.orb-halo:after{inset:45px;transform:rotateY(65deg) rotate(25deg)}
+.ai-core{width:218px;height:218px;background:radial-gradient(circle at 32% 25%,#d2fff6 0,#7ceadd 10%,#25b4bf 29%,#14658c 56%,#09243d 78%,#071522 100%);box-shadow:0 0 45px rgba(67,222,212,.6),0 0 140px rgba(40,154,196,.34),inset -24px -25px 50px rgba(0,0,0,.34)}
+.ai-core:before{inset:-15px;border-width:2px;border-top-color:#a8fff0;border-right-color:rgba(111,222,236,.7)}
+.ai-core:after{content:none}
+.ai-core span{position:absolute;inset:0;display:grid;place-items:center;font-size:88px;color:#e9fffb;text-shadow:0 0 28px #8ffff0}
+.float-chip{display:flex;align-items:center;gap:10px;padding:12px 15px;border:1px solid rgba(158,224,228,.24);border-radius:15px;background:rgba(9,30,47,.78);backdrop-filter:blur(18px);box-shadow:0 16px 40px rgba(0,0,0,.24);font-size:11px;animation:float 5s ease-in-out infinite}
+.float-chip b{display:block;color:#e9fffb;font-size:11px;margin-bottom:3px}
+.float-chip small{display:block;color:#93b3c0;font-size:9px}
+.chip-symbol{display:grid;place-items:center;width:30px;height:30px;border-radius:10px;background:rgba(93,220,209,.13);color:#7fe9dc;font-size:15px}
+.chip-one{top:62px;right:-8px}.chip-two{bottom:108px;left:-6px}.chip-three{right:-4px;bottom:43px}
+.conversation-card{position:absolute;z-index:3;top:50%;left:50%;width:230px;padding:14px;border:1px solid rgba(167,225,229,.2);border-radius:17px;background:rgba(8,27,43,.82);backdrop-filter:blur(18px);box-shadow:0 22px 55px rgba(0,0,0,.3);transform:translate(-50%,-50%) translate(125px,125px);animation:cardFloat 6s ease-in-out infinite}
+@keyframes cardFloat{0%,100%{margin-top:0}50%{margin-top:-9px}}
+.conversation-top{display:flex;align-items:center;gap:9px;padding-bottom:11px;border-bottom:1px solid rgba(185,223,229,.12)}
+.conversation-avatar{width:28px;height:28px;display:grid;place-items:center;border-radius:9px;background:linear-gradient(135deg,#85efdf,#42aebf);color:#06202a;font-weight:800;font-size:12px}
+.conversation-top b{display:block;font-size:9px;color:#effbfc}.conversation-top small{display:block;font-size:8px;color:#8eabb8;margin-top:3px}.conversation-top i{width:6px;height:6px;border-radius:50%;background:#62e0ae;margin-left:auto;box-shadow:0 0 10px #62e0ae}
+.conversation-bubble,.conversation-reply{font-size:9px;line-height:1.5;padding:9px 10px;border-radius:10px;margin-top:10px;max-width:90%}
+.conversation-bubble{background:rgba(255,255,255,.08);color:#d7ebef;border-top-left-radius:3px}
+.conversation-reply{margin-left:auto;background:rgba(76,197,201,.18);color:#c9f5f0;border-top-right-radius:3px}
+.orbit-dot{position:absolute;width:8px;height:8px;border-radius:50%;background:#8ff6e7;box-shadow:0 0 18px #8ff6e7;z-index:2}
+.orbit-dot-one{top:17%;left:28%}.orbit-dot-two{bottom:18%;right:22%;width:5px;height:5px}
+.landing-features{position:relative;z-index:1;max-width:1360px;margin:0 auto;padding:65px 6.5% 100px}
+.features-heading{max-width:590px;margin-bottom:34px}
+.features-heading .eyebrow{margin-bottom:17px}
+.features-heading h2{font-size:clamp(38px,4.5vw,60px);line-height:1.03;letter-spacing:-2.8px;margin:0 0 15px;color:#f3fbff}
+.features-heading p{max-width:460px;color:#9fb4c1;font-size:13px;line-height:1.8;margin:0}
+.feature-grid{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:15px}
+.feature-card{position:relative;min-height:275px;overflow:hidden;padding:25px;border:1px solid rgba(171,220,228,.15);border-radius:22px;background:linear-gradient(145deg,rgba(24,55,75,.76),rgba(9,28,45,.78));box-shadow:0 18px 50px rgba(0,0,0,.13);transition:transform .3s ease,border-color .3s ease}
+.feature-card:hover{transform:translateY(-6px);border-color:rgba(112,229,221,.42)}
+.feature-card-large{background:radial-gradient(circle at 85% 80%,rgba(46,193,190,.2),transparent 42%),linear-gradient(145deg,rgba(24,65,82,.9),rgba(9,28,45,.86))}
+.feature-card-accent{background:radial-gradient(circle at 100% 0,rgba(89,135,218,.22),transparent 45%),linear-gradient(145deg,rgba(25,49,76,.9),rgba(9,28,45,.86))}
+.feature-number{font-size:9px;letter-spacing:1.8px;color:#7ca1b0;font-weight:750}
+.feature-icon{width:42px;height:42px;display:grid;place-items:center;margin:26px 0 17px;border-radius:13px;background:rgba(95,220,208,.12);color:#82e9de;font-size:21px}
+.feature-card h3{font-size:19px;letter-spacing:-.5px;margin:0 0 10px;color:#f0fbfc}
+.feature-card p{font-size:11px;line-height:1.8;color:#9db4c0;max-width:290px;margin:0}
+.language-pills,.mini-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:21px}
+.language-pills span,.mini-tags span{padding:7px 10px;border:1px solid rgba(148,222,222,.2);border-radius:999px;background:rgba(255,255,255,.045);color:#c9eeeb;font-size:9px}
+.feature-orbit{position:absolute;right:-17px;bottom:-47px;width:145px;height:145px;display:grid;place-items:center;border:1px solid rgba(120,227,217,.2);border-radius:50%;color:rgba(148,244,232,.25);font-size:42px;font-weight:700;box-shadow:0 0 0 18px rgba(115,225,217,.025),0 0 0 38px rgba(115,225,217,.02)}
+.handoff-line{display:flex;align-items:center;gap:8px;margin-top:24px;color:#c7e4e7;font-size:9px}
+.handoff-line span{width:7px;height:7px;border-radius:50%;background:#70e1bb;box-shadow:0 0 10px #70e1bb}
+.handoff-line i{font-style:normal;color:#77e5d9;font-size:14px}
+.landing-footer{max-width:1360px;margin:auto;padding:22px 6.5% 30px;border-top:1px solid rgba(183,221,229,.12);display:flex;align-items:center;justify-content:space-between;gap:16px;color:#7693a1;font-size:10px}
+.footer-logo{font-size:16px;font-weight:800;letter-spacing:-.8px;color:#eaf9fb}
+@media(max-width:900px){.landing-hero{grid-template-columns:1fr;gap:0;padding-top:55px;text-align:center}.hero-copy{margin:auto}.hero-copy p{margin-left:auto;margin-right:auto}.hero-actions,.hero-note{justify-content:center}.hero-visual{height:480px;max-width:620px;width:100%;margin:0 auto}.feature-grid{grid-template-columns:1fr 1fr}.feature-card-large{grid-column:span 2}}
+@media(max-width:600px){.landing-nav{height:72px;padding:0 22px}.landing-links{gap:10px}.landing-links a{display:none}.landing-hero{padding:45px 22px 38px}.hero-copy h1{font-size:clamp(43px,12vw,62px);letter-spacing:-2.8px}.hero-copy p{font-size:13px}.hero-visual{height:370px;margin-top:5px}.orb-halo{width:270px}.ai-core{width:145px;height:145px}.ai-core span{font-size:62px}.visual-glow{width:310px;height:310px}.float-chip{padding:9px 10px;gap:7px}.chip-symbol{width:25px;height:25px}.chip-one{top:34px;right:0}.chip-two{left:0;bottom:93px}.chip-three{right:0;bottom:27px}.conversation-card{width:180px;padding:10px;transform:translate(-50%,-50%) translate(83px,106px)}.landing-features{padding:48px 22px 65px}.features-heading h2{letter-spacing:-1.8px}.feature-grid{grid-template-columns:1fr}.feature-card-large{grid-column:auto}.feature-card{min-height:245px}.landing-footer{padding:20px 22px 25px;flex-wrap:wrap}.landing-footer>span:nth-child(2){order:3;width:100%}}
+@media(prefers-reduced-motion:reduce){.landing *, .landing *:before,.landing *:after{animation:none!important;transition:none!important}}
+
+</style>
+</head>
+
+<body>
+
+
+<div id="landingScreen" class="landing">
+  <div class="landing-grain" aria-hidden="true"></div>
+  <nav class="landing-nav">
+    <a class="landing-logo" href="#landingAbout" aria-label="Convorza AI home">convorza<span>.</span></a>
+    <div class="landing-links">
+      <a href="#landingFeatures">Features</a>
+      <a href="#landingAbout">About</a>
+      <button class="landing-login" type="button" onclick="openAuth('login')">Log in <span>↗</span></button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="landing-hero" id="landingAbout">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> CUSTOMER SUPPORT, REIMAGINED</div>
+        <h1>Every language.<br><em>One conversation.</em></h1>
+        <p>Meet Convorza AI — intelligent, multilingual customer support that helps businesses connect with customers in English, Hindi and Hinglish. Personalized assistance, clearer conversations and a smoother support experience.</p>
+        <div class="hero-actions">
+          <button class="hero-primary" type="button" onclick="openAuth('signup')">Get started <span>↗</span></button>
+          <button class="hero-secondary" type="button" onclick="document.getElementById('landingFeatures').scrollIntoView({behavior:'smooth'})">Explore features <span>↓</span></button>
+        </div>
+        <div class="hero-note"><span class="note-check">✓</span> Built for better business conversations</div>
+      </div>
+
+      <div class="hero-visual" aria-label="Abstract animated Convorza AI assistant illustration">
+        <div class="visual-glow"></div>
+        <div class="orb-halo"></div>
+        <div class="ai-core"><span>✧</span></div>
+        <div class="orbit-dot orbit-dot-one"></div>
+        <div class="orbit-dot orbit-dot-two"></div>
+        <div class="float-chip chip-one"><span class="chip-symbol">✦</span><span><b>English</b><small>Hello! How can I help?</small></span></div>
+        <div class="float-chip chip-two"><span class="chip-symbol">✧</span><span><b>Hindi</b><small>नमस्ते! बताइए</small></span></div>
+        <div class="float-chip chip-three"><span class="chip-symbol">◉</span><span><b>Hinglish</b><small>Kaise help karun?</small></span></div>
+        <div class="conversation-card">
+          <div class="conversation-top"><span class="conversation-avatar">C</span><span><b>Convorza assistant</b><small>Online · Ready to help</small></span><i></i></div>
+          <div class="conversation-bubble">Hi there! What can I help you with today?</div>
+          <div class="conversation-reply">I have a question about my order.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-features" id="landingFeatures">
+      <div class="features-heading">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> ONE ASSISTANT. MORE POSSIBILITIES.</div>
+        <h2>Make every interaction<br><em>count.</em></h2>
+        <p>Thoughtful AI support that makes it easier for businesses to understand and help their customers.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card feature-card-large">
+          <div class="feature-number">01 / LANGUAGE</div>
+          <div class="feature-icon">文</div>
+          <h3>Speak their language.</h3>
+          <p>Make conversations feel more natural with English, Hindi and Hinglish text support.</p>
+          <div class="language-pills"><span>English</span><span>हिन्दी</span><span>Hinglish</span></div>
+          <div class="feature-orbit" aria-hidden="true">Aa</div>
+        </article>
+        <article class="feature-card">
+          <div class="feature-number">02 / PERSONALIZATION</div>
+          <div class="feature-icon">✧</div>
+          <h3>Made for your business.</h3>
+          <p>Give each business a dedicated assistant shaped around its services and customer needs.</p>
+          <div class="mini-tags"><span>Retail</span><span>Hospitality</span><span>More</span></div>
+        </article>
+        <article class="feature-card feature-card-accent">
+          <div class="feature-number">03 / HUMAN TOUCH</div>
+          <div class="feature-icon">↗</div>
+          <h3>Know when to hand over.</h3>
+          <p>Route issues that need personal attention to a human support team.</p>
+          <div class="handoff-line"><span></span><b>AI assistant</b><i>→</i><b>Human team</b></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="landing-footer"><span class="footer-logo">convorza<span>.</span></span><span>Making every customer conversation count.</span><span>© 2026 Convorza AI</span></footer>
+</div>
+<div id="authScreen" class="auth-screen hidden">
+  <div class="auth-card">
+    <div class="brand">convorza<span>.</span></div>
+    <h1 id="authTitle">Welcome back</h1>
+    <p id="authSubtitle" class="subtitle" style="margin-bottom:25px">Log in to your business workspace.</p>
+
+    <form id="authForm">
+      <div id="signupFields" class="hidden">
+        <label class="auth-label">Your name</label>
+        <input class="auth-field" id="ownerName" placeholder="Your full name">
+        <label class="auth-label">Business name</label>
+        <input class="auth-field" id="businessName" placeholder="e.g. My Clothing Store">
+        <label class="auth-label">Industry</label>
+        <select class="auth-field" id="industry">
+          <option value="Retail">Retail</option>
+          <option value="Restaurant">Restaurant</option>
+          <option value="Healthcare">Healthcare</option>
+          <option value="Education">Education</option>
+          <option value="Other">Other</option>
+        </select>
+        <label class="auth-label">AI assistant name</label>
+        <input class="auth-field" id="newAssistantName" placeholder="e.g. Riya" value="Riya">
+      </div>
+
+      <label class="auth-label">Email address</label>
+      <input class="auth-field" id="authEmail" type="email" required placeholder="you@example.com">
+      <label class="auth-label">Password</label>
+      <input class="auth-field" id="authPassword" type="password" required minlength="8" placeholder="At least 8 characters">
+      <button class="primary" id="authSubmit" type="submit" style="width:100%;padding:13px">Log in</button>
+    </form>
+
+    <p id="authError" class="auth-error"></p>
+    <p style="text-align:center;font-size:12px;color:#7b8799;margin-top:20px">
+      <span id="authSwitchText">Don't have an account?</span>
+      <button id="authSwitch" type="button" class="auth-switch">Sign up</button>
+    </p>
+    <div class="auth-divider">
+      <p class="demo-note">Just want to explore the existing demo?</p>
+      <button type="button" class="secondary" id="demoAccess" style="width:100%">Continue to demo workspace</button>
+    </div>
+  </div>
+</div>
+
+<div class="app hidden" id="mainApp">
+<aside class="sidebar">
+  <div class="brand">convorza<span>.</span></div>
+  <div class="nav-label">ACCOUNT</div>
+  <nav class="nav"><button data-page="owner"><span>♙</span>My Business</button></nav>
+  <div class="workspace-label" id="workspaceLabel">BUSINESS WORKSPACE</div>
+  <select class="business-select" id="businessSelect" aria-label="Choose business"></select>
+  <div class="nav-label">WORKSPACE</div>
+  <nav class="nav">
+    <button class="active" data-page="overview"><span>▦</span>Overview</button>
+    <button data-page="playground"><span>◉</span>Chat Playground</button>
+    <button data-page="requests"><span>▤</span>Support Requests</button>
+  </nav>
+  <div class="nav-label">CONFIGURATION</div>
+  <nav class="nav">
+    <button data-page="agent"><span>✧</span>AI Agent</button>
+    <button data-page="knowledge"><span>▧</span>Knowledge Base</button>
+  </nav>
+  <div class="sidebar-bottom"><span class="status-dot"></span><span id="connectionLabel">System connected</span></div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+  <div><strong id="topBusiness">Kora Clothing</strong><br><small>Business workspace</small></div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <span id="ownerDisplay" style="font-size:12px;color:#68758a"></span>
+    <button class="secondary" id="logoutBtn">Log out</button>
+    <div class="profile" id="profileInitial">A</div>
+  </div>
+</header>
+
+<div class="content">
+
+<section class="section" id="owner">
+  <div class="page-head"><div><h1>My Business</h1><div class="subtitle">Your account and registered business details.</div></div></div>
+  <div class="panel">
+    <div class="panel-head"><h3>Owner profile</h3></div>
+    <div class="business-card">
+      <div class="business-avatar" id="ownerAvatar">A</div>
+      <div><strong id="ownerNameDisplay">Business owner</strong><small id="ownerEmailDisplay">—</small></div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-head"><h3>Registered businesses</h3><span class="tag green">Your account</span></div>
+    <div id="ownerBusinessList"><div class="empty">Loading your businesses...</div></div>
+  </div>
+  <div class="notice">Your business profile is saved. Connecting its own knowledge base and AI assistant is the next development step.</div>
+</section>
+
+<section class="section active" id="overview">
+  <div class="page-head">
+    <div><h1>Overview</h1><div class="subtitle">Here's what's happening with your customer support.</div></div>
+    <button class="primary" onclick="showPage('playground')">＋ Test AI agent</button>
+  </div>
+  <div class="grid">
+    <div class="stat"><div class="stat-top">Conversations <span class="stat-icon">◉</span></div><strong id="chats">—</strong><small>Unique chat sessions</small></div>
+    <div class="stat"><div class="stat-top">Customer messages <span class="stat-icon">✉</span></div><strong id="messages">—</strong><small>Messages received</small></div>
+    <div class="stat"><div class="stat-top">Support requests <span class="stat-icon">▤</span></div><strong id="requests">—</strong><small>Requests created</small></div>
+    <div class="stat"><div class="stat-top">Human escalations <span class="stat-icon">♧</span></div><strong id="escalations">—</strong><small>Requiring human attention</small></div>
+  </div>
+  <div class="analytics-grid">
+    <div class="panel analytics-card"><div class="panel-head"><h3>Request status overview</h3></div><div id="statusAnalytics"><div class="empty">Loading status data...</div></div></div>
+    <div class="panel analytics-card"><div class="panel-head"><h3>Resolution rate</h3></div><div id="resolutionAnalytics"><div class="empty">Loading resolution data...</div></div></div>
+    <div class="panel analytics-card"><div class="panel-head"><h3>Priority breakdown</h3></div><div id="priorityAnalytics"><div class="empty">Loading priority data...</div></div></div>
+  </div>
+  <div class="panel trend-panel"><div class="panel-head"><h3>Support request trends</h3><small>Last 7 days</small></div><div id="trendAnalytics"><div class="empty">Loading trend data...</div></div></div>
+  <div class="columns">
+    <div class="panel"><div class="panel-head"><h3>Recent support activity</h3><small>Latest records</small></div><div id="recentActivity"><div class="empty">Loading activity...</div></div></div>
+    <div>
+      <div class="panel"><div class="panel-head"><h3>Most common requests</h3></div><div id="topProblems"><div class="empty">Loading...</div></div></div>
+      <div class="panel">
+        <div class="panel-head"><h3>Demo businesses</h3></div>
+        <div class="business-card"><div class="business-avatar">K</div><div><strong>Kora Clothing</strong><small>Retail · AI assistant Riya</small></div></div>
+        <div class="business-card"><div class="business-avatar">S</div><div><strong>Spice Route</strong><small>Restaurant · AI assistant Aarav</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="playground">
+  <div class="page-head"><div><h1>Chat Playground</h1><div class="subtitle">Experience your business's AI support assistant.</div></div><span class="tag green">Live AI connection</span></div>
+  <div class="chat-layout">
+    <div class="chat-panel">
+      <div class="chat-header">
+        <div class="business-avatar" id="chatAvatar">K</div>
+        <div><strong id="assistantName">Riya</strong><small id="assistantBusiness">Kora Clothing · AI assistant</small></div>
+        <span class="tag green" style="margin-left:auto">Online</span>
+      </div>
+      <div class="chat-messages" id="chatMessages"><div class="empty">Starting conversation...</div></div>
+      <div class="chat-input-area">
+        <div class="quick-replies" id="quickReplies"></div>
+        <div class="chat-input-row"><input id="chatInput" placeholder="Type a message..." autocomplete="off"><button class="primary" id="sendBtn">Send</button></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h3>Demo scenarios</h3></div>
+      <p class="demo-note">Try these scenarios to see how the assistant handles real customer requests.</p>
+      <div id="scenarioButtons"></div>
+      <div class="notice">This demo is connected to your backend. Requests and escalations created during testing are saved in the database.</div>
+      <button class="secondary" style="width:100%;margin-top:15px" onclick="resetChat()">Reset conversation</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="requestsPage">
+  <div class="page-head"><div><h1>Support Requests</h1><div class="subtitle">Requests and escalations recorded by your AI assistant.</div></div><button class="secondary" onclick="loadDashboard()">↻ Refresh</button></div>
+  <div class="panel">
+    <div class="request-filters" id="requestFilters">
+      <button class="filter-btn active" data-filter="all">All Requests</button>
+      <button class="filter-btn" data-filter="open">Open</button>
+      <button class="filter-btn" data-filter="in_progress">In Progress</button>
+      <button class="filter-btn" data-filter="resolved">Resolved</button>
+      <button class="filter-btn" data-filter="escalation">Escalations</button>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>ID</th><th>TYPE</th><th>DETAILS</th><th>PRIORITY</th><th>STATUS</th><th>CREATED</th></tr></thead>
+      <tbody id="requestRows"></tbody>
+    </table></div>
+  </div>
+</section>
+
+<section class="section" id="agent">
+  <div class="page-head"><div><h1>AI Agent</h1><div class="subtitle">Your business's dedicated AI support assistant.</div></div><span class="tag green">Connected</span></div>
+  <div class="panel">
+    <div class="agent-box"><div class="agent-avatar">✧</div><div><strong id="agentTitle">Riya</strong><small id="agentSubtitle">Kora Clothing's AI support assistant</small></div></div>
+    <div class="notice">This demo agent is powered by your existing Gemini backend and business-specific configuration.</div>
+  </div>
+  <div class="panel"><div class="panel-head"><h3>Agent capabilities</h3></div><ul class="feature-list" id="agentCapabilities"></ul></div>
+  <div class="panel"><div class="panel-head"><h3>Agent configuration</h3></div><p class="demo-note">The current demo loads the agent's tone, instructions, tools and business information from backend configuration files. Editing these settings from this page is not connected yet.</p></div>
+</section>
+
+<section class="section" id="knowledge">
+  <div class="page-head"><div><h1>Knowledge Base</h1><div class="subtitle">Business information used by your AI assistant.</div></div></div>
+  <div class="panel">
+    <div class="panel-head"><h3>Business knowledge files</h3><span class="tag green">Loaded by backend</span></div>
+    <div class="business-card"><div class="business-avatar">FAQ</div><div><strong>Frequently asked questions</strong><small>faq.txt · Used in AI responses</small></div></div>
+    <div class="business-card"><div class="business-avatar">CSV</div><div><strong>Business records</strong><small>records.csv · Used for record lookups</small></div></div>
+    <div class="business-card"><div class="business-avatar">CFG</div><div><strong>Agent configuration</strong><small>config.json · Tools, tone and business rules</small></div></div>
+    <div class="notice">These files are currently managed in your project folder. Uploading and editing knowledge directly from this page is not implemented yet.</div>
+  </div>
+</section>
+
+</div>
+</main>
+</div>
+
+<script>
+const API = "";
+let authToken = localStorage.getItem("convorza_token") || "";
+let currentOwner = null;
+let authMode = "login";
+let isDemoMode = false;
+let businesses = [];
+let ownerBusinesses = [];
+let currentBusiness = "kora_clothing";
+let currentConfig = null;
+let history = [];
+let sessionId = newSession();
+let dashboardRequests = [];
+let activeRequestFilter = "all";
+
+function newSession(){
+  return "convorza-" + Date.now() + "-" + Math.random().toString(36).slice(2,8);
+}
+
+function escapeHTML(value){
+  return String(value ?? "").replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[c]);
+}
+
+function authHeaders(extra={}){
+  const headers={...extra};
+  if(authToken && !isDemoMode) headers.Authorization="Bearer "+authToken;
+  return headers;
+}
+
+function showAuthError(message){
+  document.getElementById("authError").textContent=message;
+}
+
+// LANDING PAGE NAVIGATION
+function openAuth(mode="login") {
+  document.getElementById("landingScreen").classList.add("hidden");
+  document.getElementById("mainApp").classList.add("hidden");
+  document.getElementById("authScreen").classList.remove("hidden");
+  setAuthMode(mode);
+}
+
+// AUTHENTICATION
+
+function setAuthMode(mode){
+  authMode=mode;
+  const signup=mode==="signup";
+  document.getElementById("authTitle").textContent=signup?"Create your account":"Welcome back";
+  document.getElementById("authSubtitle").textContent=signup?"Set up your business workspace.":"Log in to your business workspace.";
+  document.getElementById("signupFields").classList.toggle("hidden",!signup);
+  document.getElementById("authSubmit").textContent=signup?"Create account":"Log in";
+  document.getElementById("authSwitchText").textContent=signup?"Already have an account?":"Don't have an account?";
+  document.getElementById("authSwitch").textContent=signup?"Log in":"Sign up";
+  showAuthError("");
+}
+
+document.getElementById("authSwitch").addEventListener("click",()=>{
+  setAuthMode(authMode==="login"?"signup":"login");
+});
+
+document.getElementById("authForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const errorBox=document.getElementById("authError");
+  const submit=document.getElementById("authSubmit");
+  errorBox.textContent="";
+  submit.disabled=true;
+  submit.textContent="Please wait...";
+
+  const payload={
+    email:document.getElementById("authEmail").value.trim(),
+    password:document.getElementById("authPassword").value
+  };
+
+  let endpoint="/api/auth/login";
+
+  if(authMode==="signup"){
+    endpoint="/api/auth/signup";
+    payload.name=document.getElementById("ownerName").value.trim();
+    payload.business_name=document.getElementById("businessName").value.trim();
+    payload.industry=document.getElementById("industry").value;
+    payload.assistant_name=document.getElementById("newAssistantName").value.trim()||"Riya";
+
+    if(!payload.name||!payload.business_name){
+      showAuthError("Please enter your name and business name.");
+      submit.disabled=false;
+      submit.textContent="Create account";
+      return;
+    }
+  }
+
+  try{
+    const response=await fetch(API+endpoint,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(payload)
+    });
+    const data=await response.json();
+    if(!response.ok) throw new Error(data.detail||"Authentication failed.");
+
+    authToken=data.token;
+    currentOwner=data.owner||null;
+    isDemoMode=false;
+    localStorage.setItem("convorza_token",authToken);
+    await enterWorkspace();
+  }catch(error){
+    showAuthError(error.message);
+  }finally{
+    submit.disabled=false;
+    submit.textContent=authMode==="signup"?"Create account":"Log in";
+  }
+});
+
+// DEMO ACCESS
+
+document.getElementById("demoAccess").addEventListener("click",async()=>{
+  authToken="";
+  currentOwner=null;
+  ownerBusinesses=[];
+  isDemoMode=true;
+  localStorage.removeItem("convorza_token");
+  await enterWorkspace();
+});
+
+// WORKSPACE
+
+async function enterWorkspace(){
+  if(authToken&&!isDemoMode){
+    try{
+      const response=await fetch(API+"/api/auth/me",{headers:authHeaders()});
+      if(!response.ok) throw new Error("Your login session has expired.");
+      const data=await response.json();
+      currentOwner=data.owner||data;
+    }catch(error){
+      localStorage.removeItem("convorza_token");
+      authToken="";
+      currentOwner=null;
+      document.getElementById("authScreen").classList.remove("hidden");
+      document.getElementById("mainApp").classList.add("hidden");
+      showAuthError(error.message);
+      return;
+    }
+  }
+
+  document.getElementById("landingScreen").classList.add("hidden");
+  document.getElementById("authScreen").classList.add("hidden");
+  document.getElementById("mainApp").classList.remove("hidden");
+  updateOwnerDisplay();
+
+  if(currentOwner&&!isDemoMode){
+    await loadOwnerBusinesses();
+    showPage("owner");
+  }else{
+    showPage("overview");
+  }
+
+  await init();
+}
+
+function updateOwnerDisplay(){
+  const name=currentOwner?.name||"Demo User";
+  const email=currentOwner?.email||"Demo workspace";
+  document.getElementById("ownerDisplay").textContent=name;
+  document.getElementById("profileInitial").textContent=name.charAt(0).toUpperCase();
+  document.getElementById("ownerAvatar").textContent=name.charAt(0).toUpperCase();
+  document.getElementById("ownerNameDisplay").textContent=name;
+  document.getElementById("ownerEmailDisplay").textContent=email;
+}
+
+async function loadOwnerBusinesses(){
+  const container=document.getElementById("ownerBusinessList");
+  if(!authToken||isDemoMode){
+    container.innerHTML='<div class="empty">Log in to view your registered businesses.</div>';
+    return;
+  }
+
+  try{
+    const response=await fetch(API+"/api/owner/businesses",{headers:authHeaders()});
+    if(!response.ok) throw new Error("Could not load your businesses.");
+    const data=await response.json();
+    ownerBusinesses=Array.isArray(data)?data:(data.businesses||[]);
+
+    if(!ownerBusinesses.length){
+      container.innerHTML='<div class="empty">No businesses registered yet.</div>';
+      return;
+    }
+
+    container.innerHTML=ownerBusinesses.map(b=>`
+      <div class="business-card">
+        <div class="business-avatar">${escapeHTML((b.business_name||"B").charAt(0).toUpperCase())}</div>
+        <div>
+          <strong>${escapeHTML(b.business_name)}</strong>
+          <small>${escapeHTML(b.industry||"Business")} · AI assistant ${escapeHTML(b.assistant_name||"Assistant")}</small>
+          <small>Business ID: ${escapeHTML(b.business_id||b.id||"—")}</small>
+        </div>
+      </div>
+    `).join("");
+  }catch(error){
+    console.error(error);
+    container.innerHTML=`<div class="empty">${escapeHTML(error.message)}</div>`;
+  }
+}
+
+// LOGOUT
+
+document.getElementById("logoutBtn").addEventListener("click",async()=>{
+  if(authToken){
+    try{
+      await fetch(API+"/api/auth/logout",{method:"POST",headers:authHeaders()});
+    }catch(error){
+      console.warn("Logout request could not reach server.",error);
+    }
+  }
+
+  localStorage.removeItem("convorza_token");
+  authToken="";
+  currentOwner=null;
+  ownerBusinesses=[];
+  isDemoMode=false;
+  businesses=[];
+  document.getElementById("mainApp").classList.add("hidden");
+  document.getElementById("authScreen").classList.add("hidden");
+  document.getElementById("landingScreen").classList.remove("hidden");
+  document.getElementById("authForm").reset();
+  setAuthMode("login");
+});
+
+// NAVIGATION
+
+function showPage(page){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.querySelectorAll(".nav button").forEach(b=>{
+    b.classList.toggle("active",b.dataset.page===page);
+  });
+
+  const id=page==="requests"?"requestsPage":page;
+  const section=document.getElementById(id);
+  if(section) section.classList.add("active");
+
+  if(page==="requests") loadDashboard();
+  if(page==="owner") loadOwnerBusinesses();
+}
+
+document.querySelectorAll(".nav button").forEach(button=>{
+  button.addEventListener("click",()=>showPage(button.dataset.page));
+});
+
+// BUSINESS INITIALIZATION
+
+async function init(){
+  try{
+    const response=await fetch(API+"/api/businesses",{headers:authHeaders()});
+    if(!response.ok) throw new Error("Could not load businesses.");
+
+    const data=await response.json();
+    const demoBusinesses=Array.isArray(data)?data:(data.businesses||[]);
+
+    if(!demoBusinesses.length) throw new Error("No demo businesses are configured.");
+
+    businesses=demoBusinesses.slice();
+
+    // Include the owner's registered businesses in the selector.
+    // Their own knowledge-base files still need backend provisioning.
+    ownerBusinesses.forEach(b=>{
+      const id=b.business_id||b.id;
+      if(id&&!businesses.some(existing=>existing.id===id)){
+        businesses.push({
+          id,
+          business_name:b.business_name,
+          assistant_name:b.assistant_name||"Assistant",
+          industry:b.industry||"Other",
+          quick_replies:[]
+        });
+      }
+    });
+
+    const select=document.getElementById("businessSelect");
+    select.innerHTML=businesses.map(b=>
+      `<option value="${escapeHTML(b.id)}">${escapeHTML(b.business_name)}</option>`
+    ).join("");
+
+    if(!businesses.some(b=>b.id===currentBusiness)){
+      currentBusiness=ownerBusinesses.length
+        ?(ownerBusinesses[0].business_id||ownerBusinesses[0].id)
+        :businesses[0].id;
+    }
+
+    select.value=currentBusiness;
+    await changeBusiness();
+  }catch(error){
+    console.error(error);
+    document.getElementById("recentActivity").textContent="Backend connection failed. Check that your server is running.";
+    document.getElementById("chatMessages").textContent="Could not connect to the backend.";
+  }
+}
+
+document.getElementById("businessSelect").addEventListener("change",async e=>{
+  currentBusiness=e.target.value;
+  await changeBusiness();
+});
+
+function getGreeting(){
+  if(currentBusiness==="kora_clothing") return "Hi! I'm Riya from Kora Clothing. How can I help you today?";
+  if(currentBusiness==="spice_route") return "Namaste! I'm Aarav from Spice Route. How may I help you today?";
+  return `Hello! I'm ${currentConfig?.assistant_name||"your assistant"} from ${currentConfig?.business_name||"your business"}. How can I help you today?`;
+}
+
+async function changeBusiness(){
+  currentConfig=businesses.find(b=>b.id===currentBusiness);
+  if(!currentConfig) return;
+
+  document.getElementById("topBusiness").textContent=currentConfig.business_name;
+  document.getElementById("assistantName").textContent=currentConfig.assistant_name||"Assistant";
+  document.getElementById("assistantBusiness").textContent=currentConfig.business_name+" · AI assistant";
+  document.getElementById("chatAvatar").textContent=(currentConfig.assistant_name||"A").charAt(0);
+  document.getElementById("agentTitle").textContent=currentConfig.assistant_name||"Assistant";
+  document.getElementById("agentSubtitle").textContent=currentConfig.business_name+"'s AI support assistant";
+
+  const replies=currentConfig.quick_replies||[];
+  document.getElementById("agentCapabilities").innerHTML=replies.map(x=>`<li>${escapeHTML(x)}</li>`).join("");
+  document.getElementById("quickReplies").innerHTML=replies.map(x=>`<button type="button">${escapeHTML(x)}</button>`).join("");
+
+  document.querySelectorAll("#quickReplies button").forEach(b=>{
+    b.addEventListener("click",()=>sendMessage(b.textContent));
+  });
+
+  let scenarios=[];
+  if(currentBusiness==="kora_clothing"){
+    scenarios=["My order KC1003 is delayed","Can I return my order?","I want to speak to a human agent."];
+  }else if(currentBusiness==="spice_route"){
+    scenarios=["I'd like to book a table for 4 tonight at 8 PM","One guest has a peanut allergy","Can I speak to the manager?"];
+  }else{
+    scenarios=["Tell me about your products or services","I need help with an order","I want to speak to a human agent."];
+  }
+
+  document.getElementById("scenarioButtons").innerHTML=scenarios.map(s=>
+    `<button class="secondary" style="width:100%;text-align:left;margin:5px 0" data-scenario="${escapeHTML(s)}">${escapeHTML(s)}</button>`
+  ).join("");
+
+  document.querySelectorAll("[data-scenario]").forEach(b=>{
+    b.addEventListener("click",()=>sendMessage(b.dataset.scenario));
+  });
+
+  activeRequestFilter="all";
+  updateFilterButtons();
+  resetChat();
+  await loadDashboard();
+}
+
+// CHAT
+
+function addMessage(role,text){
+  const container=document.getElementById("chatMessages");
+  if(container.querySelector(".empty")) container.innerHTML="";
+  const div=document.createElement("div");
+  div.className="message "+(role==="user"?"user":"bot");
+  div.textContent=text;
+  container.appendChild(div);
+  container.scrollTop=container.scrollHeight;
+}
+
+function resetChat(){
+  history=[];
+  sessionId=newSession();
+  document.getElementById("chatMessages").innerHTML="";
+  addMessage("model",getGreeting());
+}
+
+async function sendMessage(text){
+  const input=document.getElementById("chatInput");
+  const message=(text||input.value).trim();
+  if(!message) return;
+
+  input.value="";
+  addMessage("user",message);
+
+  const sendBtn=document.getElementById("sendBtn");
+  sendBtn.disabled=true;
+  sendBtn.textContent="...";
+
+  // The backend agent expects each history item as {role, text}.
+  const payloadHistory=history.slice();
+
+  try{
+    const response=await fetch(API+"/api/chat",{
+      method:"POST",
+      headers:authHeaders({"Content-Type":"application/json"}),
+      body:JSON.stringify({
+        business:currentBusiness,
+        message,
+        session_id:sessionId,
+        history:payloadHistory
+      })
+    });
+
+    const data=await response.json();
+    if(!response.ok) throw new Error(data.detail||"Request failed.");
+
+    const reply=data.reply||"I couldn't generate a response.";
+    addMessage("model",reply);
+
+    history.push({role:"user",text:message});
+    history.push({role:"model",text:reply});
+
+    await loadDashboard();
+  }catch(error){
+    console.error(error);
+    addMessage("model","Sorry, I couldn't connect to the assistant. Please check the server and try again. Error: "+error.message);
+  }finally{
+    sendBtn.disabled=false;
+    sendBtn.textContent="Send";
+  }
+}
+
+document.getElementById("sendBtn").addEventListener("click",()=>sendMessage());
+document.getElementById("chatInput").addEventListener("keydown",e=>{
+  if(e.key==="Enter") sendMessage();
+});
+
+// REQUEST FILTERS
+
+function updateFilterButtons(){
+  document.querySelectorAll(".filter-btn").forEach(button=>{
+    button.classList.toggle("active",button.dataset.filter===activeRequestFilter);
+  });
+}
+
+document.getElementById("requestFilters").addEventListener("click",e=>{
+  const button=e.target.closest(".filter-btn");
+  if(!button) return;
+  activeRequestFilter=button.dataset.filter;
+  updateFilterButtons();
+  renderRequestRows();
+});
+
+function statusSelect(r){
+  const status=["open","in_progress","resolved"].includes(r.status)?r.status:"open";
+  return `<select class="ticket-status" data-id="${escapeHTML(r.id)}">
+    <option value="open" ${status==="open"?"selected":""}>Open</option>
+    <option value="in_progress" ${status==="in_progress"?"selected":""}>In Progress</option>
+    <option value="resolved" ${status==="resolved"?"selected":""}>Resolved</option>
+  </select>`;
+}
+
+function renderRequestRows(){
+  const rows=document.getElementById("requestRows");
+  const filtered=dashboardRequests.filter(r=>{
+    if(activeRequestFilter==="all") return true;
+    if(activeRequestFilter==="escalation") return r.kind==="escalation";
+    return (r.status||"open")===activeRequestFilter;
+  });
+
+  if(!filtered.length){
+    rows.innerHTML=`<tr><td colspan="6" class="empty">No ${activeRequestFilter==="all"?"":activeRequestFilter.replace("_"," ")} requests found.</td></tr>`;
+    return;
+  }
+
+  rows.innerHTML=filtered.map(r=>`
+    <tr>
+      <td>#${escapeHTML(r.id)}</td>
+      <td>${escapeHTML(r.request_type||r.kind)}</td>
+      <td class="details">${escapeHTML(r.details)}</td>
+      <td>${escapeHTML(r.priority||"Normal")}</td>
+      <td>${statusSelect(r)}</td>
+      <td>${escapeHTML(r.created_at||"—")}</td>
+    </tr>
+  `).join("");
+}
+
+// DASHBOARD
+
+async function loadDashboard(){
+  if(!currentBusiness) return;
+
+  try{
+    const response=await fetch(
+      API+"/api/dashboard/"+encodeURIComponent(currentBusiness),
+      {headers:authHeaders()}
+    );
+    if(!response.ok) throw new Error("Dashboard request failed.");
+    const data=await response.json();
+
+    document.getElementById("chats").textContent=data.chats??0;
+    document.getElementById("messages").textContent=data.messages??0;
+    document.getElementById("requests").textContent=data.requests??0;
+    document.getElementById("escalations").textContent=data.escalations??0;
+
+    const statuses=data.status_counts||{};
+    const statusTotal=Object.values(statuses).reduce((a,b)=>a+Number(b||0),0);
+    const statusItems=[
+      {key:"open",label:"Open",className:"open"},
+      {key:"in_progress",label:"In Progress",className:"progress"},
+      {key:"resolved",label:"Resolved",className:"resolved"}
+    ];
+
+    document.getElementById("statusAnalytics").innerHTML=statusItems.map(item=>{
+      const count=Number(statuses[item.key]||0);
+      const percent=statusTotal?(count/statusTotal)*100:0;
+      return `<div class="analytics-item">
+        <div class="analytics-label"><span>${item.label}</span><span>${count}</span></div>
+        <div class="analytics-track"><div class="analytics-fill ${item.className}" style="width:${percent}%"></div></div>
+      </div>`;
+    }).join("")+`<small>Total tracked requests: ${statusTotal}</small>`;
+
+    const rate=Number(data.resolution_rate)||0;
+    document.getElementById("resolutionAnalytics").innerHTML=`
+      <div class="resolution-number">${rate}%</div>
+      <small>Requests successfully resolved</small>
+      <div class="resolution-track"><div class="resolution-fill" style="width:${Math.min(100,Math.max(0,rate))}%"></div></div>`;
+
+    const priorities=data.priority_counts||{};
+    const priorityTotal=Object.values(priorities).reduce((a,b)=>a+Number(b||0),0);
+    const priorityItems=[
+      {key:"high",label:"High",className:"high"},
+      {key:"medium",label:"Medium",className:"medium"},
+      {key:"low",label:"Low",className:"low"}
+    ];
+
+    document.getElementById("priorityAnalytics").innerHTML=priorityItems.map(item=>{
+      const count=Number(priorities[item.key]||0);
+      const percent=priorityTotal?(count/priorityTotal)*100:0;
+      return `<div class="analytics-item">
+        <div class="analytics-label"><span>${item.label}</span><span>${count}</span></div>
+        <div class="analytics-track"><div class="analytics-fill ${item.className}" style="width:${percent}%"></div></div>
+      </div>`;
+    }).join("")+`<small>Total priority requests: ${priorityTotal}</small>`;
+
+    const trend=data.request_trend||[];
+    const trendMap={};
+    trend.forEach(item=>trendMap[item.day]=item.total);
+
+    const days=[];
+    for(let i=6;i>=0;i--){
+      const date=new Date();
+      date.setDate(date.getDate()-i);
+      const key=[
+        date.getFullYear(),
+        String(date.getMonth()+1).padStart(2,"0"),
+        String(date.getDate()).padStart(2,"0")
+      ].join("-");
+      days.push({key,label:date.toLocaleDateString("en",{weekday:"short"}),total:Number(trendMap[key]||0)});
+    }
+
+    const maxTrend=Math.max(1,...days.map(day=>day.total));
+    document.getElementById("trendAnalytics").innerHTML=`
+      <div class="trend-chart">${days.map(day=>`
+        <div class="trend-column">
+          <span class="trend-value">${day.total}</span>
+          <div class="trend-bar" style="height:${Math.max(3,(day.total/maxTrend)*125)}px"></div>
+          <span class="trend-day">${day.label}</span>
+        </div>`).join("")}
+      </div>`;
+
+    const recent=data.recent||[];
+    document.getElementById("recentActivity").innerHTML=recent.length
+      ?recent.slice(0,7).map(r=>`
+        <div class="activity">
+          <div class="activity-icon">${r.kind==="escalation"?"♧":"▤"}</div>
+          <div style="flex:1;min-width:0">
+            <strong>${escapeHTML(r.request_type||r.kind)}</strong>
+            <small>${escapeHTML(r.details||"No details available")}</small>
+          </div>
+          <span class="tag ${r.kind==="escalation"?"red":""}">${escapeHTML(r.status||"open")}</span>
+        </div>`).join("")
+      :'<div class="empty">No support activity yet. Try the chat playground.</div>';
+
+    const problems=data.top_problems||[];
+    document.getElementById("topProblems").innerHTML=problems.length
+      ?problems.map(p=>`<div class="activity"><div style="flex:1"><strong>${escapeHTML(p.request_type)}</strong></div><span class="tag">${escapeHTML(p.n)}</span></div>`).join("")
+      :'<div class="empty">No requests recorded yet.</div>';
+
+    dashboardRequests=recent;
+    renderRequestRows();
+  }catch(error){
+    console.error("Dashboard:",error);
+  }
+}
+
+// UPDATE TICKET STATUS
+
+document.getElementById("requestRows").addEventListener("change",async e=>{
+  if(!e.target.matches(".ticket-status")) return;
+
+  const select=e.target;
+  const request=dashboardRequests.find(r=>String(r.id)===select.dataset.id);
+  const previousStatus=request?.status||"open";
+  const newStatus=select.value;
+  select.disabled=true;
+
+  try{
+    const response=await fetch(
+      API+`/api/businesses/${encodeURIComponent(currentBusiness)}/requests/${encodeURIComponent(select.dataset.id)}`,
+      {
+        method:"PATCH",
+        headers:authHeaders({"Content-Type":"application/json"}),
+        body:JSON.stringify({status:newStatus})
+      }
+    );
+
+    if(!response.ok) throw new Error("Could not update ticket.");
+    if(request) request.status=newStatus;
+    await loadDashboard();
+  }catch(error){
+    console.error(error);
+    alert("Status update failed. Please try again.");
+    if(request) request.status=previousStatus;
+    renderRequestRows();
+  }
+});
+
+// START APPLICATION
+
+async function startApplication(){
+  if(authToken){
+    isDemoMode=false;
+    await enterWorkspace();
+  }else{
+    document.getElementById("landingScreen").classList.remove("hidden");
+    document.getElementById("authScreen").classList.add("hidden");
+    document.getElementById("mainApp").classList.add("hidden");
+    setAuthMode("login");
+  }
+}
+
+startApplication();
+</script>
+
+</body>
+</html>

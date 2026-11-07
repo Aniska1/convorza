@@ -1,0 +1,27 @@
+order_id,customer_name,item,status,order_date,expected_delivery,amount
+KC1001,Rohan,Cotton Kurta M,Delivered,2026-10-20,2026-10-26,1299
+KC1002,Priya,Denim Jacket L,Shipped,2026-11-01,2026-11-06,2499
+KC1003,Aman,Linen Shirt M,Delayed,2026-10-28,2026-11-02,1599
+KC1004,Sneha,Printed Dress S,Processing,2026-11-04,2026-11-10,1899
+KC1005,Vikram,Hoodie XL,Delivered,2026-10-05,2026-10-11,1799
+KC1006,Neha,Palazzo Pants M,Shipped,2026-11-02,2026-11-07,999
+EOFcat > backend/businesses/kora_clothing/faq.txt << 'EOF'
+Return policy: Returns and exchanges are accepted within 7 days of delivery. Items must be unworn with tags attached.
+Refunds: Refunds go to the original payment method in 5 to 7 working days after we receive the item. After 7 days we offer exchange or store credit only.
+Delivery: Orders are delivered in 4 to 7 working days across India. Delivery is free above 999 rupees.
+Sizes: We stock sizes S, M, L, XL. See the size chart on each product page.
+Payment: We accept UPI, cards and cash on delivery.
+Support hours: Human support is available 10am to 7pm, Monday to Saturday.
+EOFcat > backend/businesses/kora_clothing/config.json << 'EOF'
+{
+  "business_name": "Kora Clothing",
+  "assistant_name": "Riya",
+  "industry": "clothing",
+  "tone": "friendly, casual, short replies",
+  "languages": ["English", "Hindi", "Hinglish"],
+  "enabled_tools": ["lookup_record", "create_request", "check_policy", "escalate_to_human"],
+  "record_type": "order",
+  "request_types": ["delivery_complaint", "return_request", "exchange_request"],
+  "quick_replies": ["Track order", "Return or exchange", "Talk to human"],
+  "escalation_rules": ["customer is angry", "customer asks for a human", "refund above 2000 rupees"]
+}
